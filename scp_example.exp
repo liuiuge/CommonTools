@@ -16,5 +16,5 @@ expect {
 		expect "*ssword:" { send "$passwd\n" }
 	}
 }
-expect "KB" 
+expect "$tEof" 
 expect eof
