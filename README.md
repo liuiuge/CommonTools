@@ -6,4 +6,6 @@
     1 argu to ls
     2 argus to find a file
     3 argus to find a file contain something
-  
+# 3. scp something
+    scp something to another address, need to change user and password in the file
+    ./scp_example.exp 127.0.0.1 something /home/root/storeSth/ 'MB/s'
