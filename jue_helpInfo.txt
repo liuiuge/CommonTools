@@ -1,0 +1,22 @@
+
+jue is a tool 4 way-back-home writen with bash.
+
+jue [-option] [nickname] [sub_directory]
+jue xxx                         cd xxx directory. It's *main* function.
+                                \tif xxx not doesn't exist, script will show nicknames -> target-directory
+
+jue -c xxx [sub_directory]      cd xxx's sub_directory
+
+jue -h                          show help info
+
+jue -l                          show lists of home directory if no nickname
+
+jue -l xxx                      show lists of xxx directory
+
+jue -m xxx [sub_directory] src  move src to xxx's sub_directory, not efficient now
+
+jue -p xxx [sub_directory] src  copy src to xxx's sub_directory, not efficient now
+
+jue -r xxx [sub_directory]      rm xxx's sub_directory
+
+jue -t xxx [sub_directory]      tree xxx/xxx's sub_directory

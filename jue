@@ -1,0 +1,102 @@
+#!/bin/bash
+
+declare -A dirDict
+dirDict=([lag]="lagrange")
+
+tips="jue -h show more params"
+
+function showDict() {
+    echo "wrong dir, pick one"
+    for key in $(echo ${!dirDict[*]})
+    do
+        echo "    $key ----> /home/${dirDict[$key]}"
+    done
+
+}
+
+function helpInfo {
+    clear
+    cat jue_helpInfo.txt | while read myline
+    do
+        echo $myline
+    done
+}
+
+if [ $# = 0 ]; then
+    echo "jue need param, try 'jue -l' or 'jue xxx'"
+    echo $tips
+elif [ $# = 1 ]; then
+    if [ $1 = "-l" ]; then
+        ls -n /home
+    elif [ $1 = "-h" ]; then
+        helpInfo
+    elif [ "${dirDict[$1]}"x != ""x ]; then
+        cd /home/${dirDict[$1]}
+    else
+        showDict
+    fi
+elif [ $# > 1 ]; then
+    op=$1
+    iop=${op:1}
+    if [ ${op:0:1} != "-" ]; then
+        echo "jue -[option] nickname"
+    elif [ "$iop"x = ""x ]; then
+        echo $tips
+    else
+        if [ $iop = "l" ]; then
+            echo "list home"
+            if [ "${dirDict[$2]}"x != ""x ]; then
+                cd /home/${dirDict[$2]}
+                ls -a -ln |more
+            else
+                showDict
+            fi
+        elif [ $iop = "c" ]; then
+            echo "change directory to /home/${dirDict[$2]}/$3"
+            if [ "${dirDict[$2]}"x != ""x ]; then
+                cd /home/${dirDict[$2]}
+                cd $3
+            else
+                showDict
+            fi
+        elif [ $iop = "m" ]; then
+            if [ $# = 3 ]; then
+                echo "missing source file, try jue -h"
+            elif [ "${dirDict[$2]}"x != ""x ]; then
+                mv $4 /home/${dirDict[$2]}/$3
+            else
+                showDict
+            fi
+        elif [ $iop = "p" ]; then
+            if [ $# = 3 ]; then
+                echo "missing source file, try jue -h"
+            elif [ "${dirDict[$2]}"x != ""x ]; then
+                cp -rf $4 /home/${dirDict[$2]}/$3
+            else
+                showDict
+            fi
+        elif [ $iop = "r" ]; then
+            if [ $# = 2 ]; then
+                echo "missing source file, try jue -h"
+            elif [ "${dirDict[$2]}"x != ""x ]; then
+                rm -r /home/${dirDict[$2]}/$3
+            else
+                showDict
+            fi
+        elif [ $iop = "t" ]; then
+            if [ "${dirDict[$2]}"x != ""x ]; then
+                if [ $# = 2 ]; then
+                    tree /home/${dirDict[$2]} | more
+                elif [ $# = 3 ]; then
+                    tree /home/${dirDict[$2]}/$3 | more
+                else
+                    echo $tips
+                fi
+            else
+                showDict
+            fi
+        else
+            echo "Unknown option, try jue -h"
+        fi
+    fi
+fi
