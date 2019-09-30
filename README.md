@@ -13,3 +13,5 @@
     jue is a tool for multi-developers with one machine and use one root account.
     Make everyone home directory and add nickname-path to jue, use jue way-back-home
     see more in jue_helpInfo.txt
+# 5. deco
+    go decorator, not very useful
